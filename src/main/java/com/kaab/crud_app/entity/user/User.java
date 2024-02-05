@@ -1,4 +1,4 @@
-package com.kaab.crud_app.entity;
+package com.kaab.crud_app.entity.user;
 
 
 import jakarta.persistence.*;

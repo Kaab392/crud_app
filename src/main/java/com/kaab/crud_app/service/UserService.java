@@ -1,6 +1,6 @@
 package com.kaab.crud_app.service;
 
-import com.kaab.crud_app.entity.User;
+import com.kaab.crud_app.entity.user.User;
 import com.kaab.crud_app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
