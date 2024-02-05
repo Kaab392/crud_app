@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,17 +18,33 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/")
-    @ResponseBody
-    public ResponseEntity<User> createSingleUser(@RequestBody User user){
-            User createdUser = userService.createSingleUser(user);
-            return new ResponseEntity<>(createdUser,HttpStatus.CREATED);
+
+    @GetMapping("/home")
+    public String home(){
+        return "home";
+    }
+
+    @GetMapping("/list")
+    public String list(@ModelAttribute("user") User user){
+        return "createuser";
+    }
+
+    @GetMapping("/createuser")
+    public String showCreateUserForm(Model model) {
+        model.addAttribute("user", new User());
+        return "createuser";
+    }
+    @PostMapping("/createuser")
+    public String createSingleUser(@ModelAttribute("user") User user) {
+        userService.createSingleUser(user);
+        return "redirect:/api/user/users";
     }
 
     @GetMapping("/users")
-    @ResponseBody
-    public ResponseEntity<List<User>> findAllUser(){
-        return new ResponseEntity<>(userService.findAllUser(),HttpStatus.OK);
+    public String findAllUser(Model model){
+        List<User> users = userService.findAllUser();
+        model.addAttribute("users", users);
+        return "list";
     }
 
     @GetMapping("/user/{userID}")

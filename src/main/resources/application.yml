@@ -7,4 +7,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  mvc:
+    view:
+      prefix:
+      suffix: .jsp
+
+
 
