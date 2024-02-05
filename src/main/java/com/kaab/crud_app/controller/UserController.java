@@ -61,17 +61,51 @@ public class UserController {
     }
 
 
-    @PutMapping("/update/{userId}")
-    @ResponseBody
-    public ResponseEntity<User> updateUser(@PathVariable("userId") Integer userId,@RequestBody User updatedUser){
-        if (!userService.existUserById(userId)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        updatedUser.setId(userId);
-        User savedUser = userService.updateUserById(userId,updatedUser);
 
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    @GetMapping("/updateUserForm")
+    public String showUpdateUserForm() {
+        return "updateUserForm";
     }
+
+    @GetMapping("/updateUserDetails")
+    public String showUserDetails(@RequestParam("userId") Integer userId, Model model) {
+        // Retrieve user details based on the provided ID and add to the model
+//        Optional<User> user = userService.findUserById(userId);
+//        model.addAttribute("user", user);
+        System.out.println(userId);
+        Optional<User> user = userService.findUserById(userId);
+        System.out.println(user.get().getId() + " " + user.get().getUserName() + " " + user.get().getEmail());
+        model.addAttribute("user",user);
+        return "updateUserDetails";
+    }
+
+    @PostMapping("/updateUserDetails")
+    public String updateUserDetails(@RequestParam("userId") Integer userId) {
+        // Redirect to the page displaying user details for editing
+        return "redirect:/api/user/updateUserDetails?userId=" + userId;
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@RequestParam("userId") Integer userId,
+                             @ModelAttribute("user") User updatedUser,Model model) {
+
+        System.out.println(userId + " " + updatedUser.getUserName() + " " +updatedUser.getEmail());
+        updatedUser.setId(userId);
+        User savedUser = userService.updateUserById(userId, updatedUser);
+
+        return "redirect:/api/user/users";
+    }
+//    @PostMapping("/update/{userId}")
+//    @ResponseBody
+//    public ResponseEntity<User> updateUser(@PathVariable("userId") Integer userId,@RequestBody User updatedUser){
+//        if (!userService.existUserById(userId)) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        updatedUser.setId(userId);
+//        User savedUser = userService.updateUserById(userId,updatedUser);
+//
+//        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+//    }
 
 
     @GetMapping("/deleteuser")
