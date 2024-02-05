@@ -17,6 +17,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
+    @GetMapping("/home")
+    @ResponseBody
+    public String home(){
+        System.out.println("this is home page");
+        return "home";
+    }
     @PostMapping("/")
     @ResponseBody
     public ResponseEntity<User> createSingleUser(@RequestBody User user){

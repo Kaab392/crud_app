@@ -8,3 +8,7 @@ spring:
     hibernate:
       ddl-auto: update
 
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .jsp
