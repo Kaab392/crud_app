@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,8 @@ public class UserController {
         return "createuser";
     }
 
+
+
     @GetMapping("/createuser")
     public String showCreateUserForm(Model model) {
         model.addAttribute("user", new User());
@@ -46,6 +49,7 @@ public class UserController {
         model.addAttribute("users", users);
         return "list";
     }
+
 
     @GetMapping("/user/{userID}")
     @ResponseBody
@@ -68,15 +72,34 @@ public class UserController {
 
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
-    @DeleteMapping("/{userId}")
-    @ResponseBody
-    public ResponseEntity<Optional<User>> deleteUserById(@PathVariable("userId") Integer userId){
+
+
+    @GetMapping("/deleteuser")
+    public String showDeleteUserByIdForm(Model model) {
+        return "deleteuser";
+    }
+    @PostMapping("/deleteuser")
+    public String deleteUserById(@ModelAttribute("userId") Integer userId, RedirectAttributes redirectAttributes) {
+        System.out.println(userId);
+
+        // Check if the user exists
         if (!userService.existUserById(userId)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            System.out.println("user is not found by this id");
+            // Redirect to an error page or display an error message
+            redirectAttributes.addFlashAttribute("message", "user is not exist");
+
+            return "redirect:/api/user/deleteUserResult";
         }
-        Optional<User> deletedUser = userService.deleteUserById(userId);
-        return new ResponseEntity<>(deletedUser,HttpStatus.OK);
+        userService.deleteUserById(userId);
+        redirectAttributes.addFlashAttribute("message", "user deleteted successfully");
+        return "redirect:/api/user/deleteUserResult";
+//        return "redirect:/api/user/users";
     }
 
+
+    @GetMapping("/deleteUserResult")
+    public String showDeleteUserResult() {
+        return "deleteUserResult";
+    }
 
 }

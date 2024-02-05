@@ -1,0 +1,18 @@
+<!-- src/main/resources/templates/deleteUserResult.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete User Result</title>
+</head>
+<body>
+<h1>Delete User Result</h1>
+
+<!-- Display message from model attribute -->
+<div th:if="${message}">
+    <p th:text="${message}"></p>
+</div>
+
+<a href="/api/user/users"> View on User List</a><br><br>
+</body>
+</html>
