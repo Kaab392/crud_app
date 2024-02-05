@@ -1,10 +1,17 @@
-spring:
+############### Postgres ##################
+student:
   datasource:
-    url: jdbc:postgresql://localhost:5432/userdb
+    url: jdbc:postgresql://localhost:5432/Student
     username: postgres
-    password: postgres
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+    password: Raman@95
+    driver-class-name: org.postgresql.Driver
+
+############# MY SQL ##############
+teacher:
+  datasource:
+    url: jdbc:mysql://localhost:3306/teacher
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
 
