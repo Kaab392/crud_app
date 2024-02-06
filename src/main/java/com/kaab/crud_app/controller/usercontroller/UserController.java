@@ -1,7 +1,7 @@
-package com.kaab.crud_app.controller;
+package com.kaab.crud_app.controller.usercontroller;
 
-import com.kaab.crud_app.entity.User;
-import com.kaab.crud_app.service.UserService;
+import com.kaab.crud_app.entity.user.User;
+import com.kaab.crud_app.service.userservice.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
