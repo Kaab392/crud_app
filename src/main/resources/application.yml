@@ -1,17 +1,30 @@
-############### Postgres ##################
-student:
+spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/Student
-    username: postgres
-    password: Raman@95
-    driver-class-name: org.postgresql.Driver
-
-############# MY SQL ##############
-teacher:
-  datasource:
-    url: jdbc:mysql://localhost:3306/teacher
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-
+    user:
+      url: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: postgres
+      driver-class-name: org.postgresql.Driver
+    address:
+      url: jdbc:postgresql://localhost:5432/userdb
+      username: postgres
+      password: postgres
+      driver-class-name: org.postgresql.Driver
+#
+################ Postgres ##################
+#user:
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/Student
+#    username: postgres
+#    password: Raman@95
+#    driver-class-name: org.postgresql.Driver
+#
+############## MY SQL ##############
+#teacher:
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/teacher
+#    username: root
+#    password: root
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#
+#
