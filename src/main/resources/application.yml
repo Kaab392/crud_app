@@ -15,9 +15,6 @@ database_2:
 spring:
   jpa:
     show-sql: true
-    hibernate:
-      ddl-auto: update
-
   mvc:
     view:
       prefix: /views/
