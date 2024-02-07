@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,10 +20,10 @@ public class UserController {
 
 
     @GetMapping("/home")
-    @ResponseBody
-    public String home(){
-        System.out.println("this is home page");
-        return "home";
+    public String home(Model model){
+        List<User> userList = userService.findAllUser();
+        model.addAttribute("users", userList);
+        return "userList"; // Return the name
     }
     @PostMapping("/")
     @ResponseBody
