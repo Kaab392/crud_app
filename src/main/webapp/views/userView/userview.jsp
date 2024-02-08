@@ -17,5 +17,6 @@
 </c:when>
 <c:otherwise>
 <p>No user found</p>
+
 </c:otherwise>
 </c:choose>
