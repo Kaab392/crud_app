@@ -41,6 +41,19 @@ public class UserController {
         return "userView/userList"; // Return the name
     }
 
+    @GetMapping("/userView")
+    public String viewUserById(){
+        return "userView/viewuserform";
+    }
+
+    @GetMapping("/userViewById")
+    public String viewUser(@RequestParam("id")Integer userId,Model model){
+        Optional<User> user=userService.findUserById(userId);
+        model.addAttribute("user",user);
+        return "userView/userview";
+
+    }
+
     @GetMapping("/user/{userID}")
     @ResponseBody
     public ResponseEntity<Optional<User>> findUserById(@PathVariable("userID") Integer userId){
@@ -50,22 +63,35 @@ public class UserController {
         return new ResponseEntity<>(userService.findUserById(userId),HttpStatus.FOUND);
     }
 
-    @GetMapping("/update")
+    @GetMapping("/updateUserForm")
     public String updateUserForm(){
-        return "updateuserForm";
+        return "userView/updateuserform";
     }
 
-    @PutMapping("/update/{userId}")
-    @ResponseBody
-    public ResponseEntity<User> updateUser(@PathVariable("userId") Integer userId,@RequestBody User updatedUser){
-        if (!userService.existUserById(userId)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        updatedUser.setId(userId);
-        User savedUser = userService.updateUserById(userId,updatedUser);
+    @GetMapping("/update")
+    public String viewUpdatedUser(@RequestParam("id")Integer userId,Model model){
+        Optional<User> user = userService.findUserById(userId);
+        model.addAttribute("user",user);
 
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        return "userView/updateuser";
     }
+
+    @PostMapping("/update")
+    public String updateUser(@RequestParam("id")Integer userId,@ModelAttribute User updatedUser){
+        userService.updateUserById(userId,updatedUser);
+        return "home";
+    }
+//    @PutMapping("/update/{userId}")
+//    @ResponseBody
+//    public ResponseEntity<User> updateUser(@PathVariable("userId") Integer userId,@RequestBody User updatedUser){
+//        if (!userService.existUserById(userId)) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        updatedUser.setId(userId);
+//        User savedUser = userService.updateUserById(userId,updatedUser);
+//
+//        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+//    }
 
 
     @GetMapping("/delete")
@@ -74,7 +100,7 @@ public class UserController {
     }
 
     @PostMapping("/delete")
-    public String deleteUserById(@RequestParam("id")Integer userId){
+    public String deleteUserById(@RequestParam("userId")Integer userId){
        userService.deleteUserById(userId);
        return "home";
     }

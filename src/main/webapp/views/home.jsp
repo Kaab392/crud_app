@@ -8,7 +8,10 @@
 <body>
 <h1>Four Links Example</h1>
 <ul>
+    <li><a href="/api/user/userView">View an user by id</a></li>
+
     <li><a href="/api/user/users">Get the user list</a></li>
     <li><a href="/api/user/">Create single user</a></li>
-    <li><a href="link3">Update a user</a></li>
-    <li><a href="/api/user/delete">Delete an user</a></
+    <li><a href="/api/user/updateUserForm">Update a user</a></li>
+    <li><a href="/api/user/delete">Delete an user</a></li>
+</ul>
