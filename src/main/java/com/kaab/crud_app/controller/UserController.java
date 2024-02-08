@@ -21,21 +21,24 @@ public class UserController {
 
     @GetMapping("/home")
     public String home(Model model){
-        List<User> userList = userService.findAllUser();
-        model.addAttribute("users", userList);
-        return "userList"; // Return the name
+        return "home";
+    }
+    @GetMapping("/")
+    public String userCreationForm(){
+        return "userView/usercreation";
     }
     @PostMapping("/")
-    @ResponseBody
-    public ResponseEntity<User> createSingleUser(@RequestBody User user){
+    public String createSingleUser(@ModelAttribute User user){
             User createdUser = userService.createSingleUser(user);
-            return new ResponseEntity<>(createdUser,HttpStatus.CREATED);
+            return "redirect:/api/user/users";
     }
 
     @GetMapping("/users")
-    @ResponseBody
-    public ResponseEntity<List<User>> findAllUser(){
-        return new ResponseEntity<>(userService.findAllUser(),HttpStatus.OK);
+
+    public String findAllUser(Model model){
+        List<User> userList = userService.findAllUser();
+        model.addAttribute("users", userList);
+        return "userView/userList"; // Return the name
     }
 
     @GetMapping("/user/{userID}")
@@ -47,6 +50,10 @@ public class UserController {
         return new ResponseEntity<>(userService.findUserById(userId),HttpStatus.FOUND);
     }
 
+    @GetMapping("/update")
+    public String updateUserForm(){
+        return "updateuserForm";
+    }
 
     @PutMapping("/update/{userId}")
     @ResponseBody
@@ -59,14 +66,17 @@ public class UserController {
 
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
-    @DeleteMapping("/{userId}")
-    @ResponseBody
-    public ResponseEntity<Optional<User>> deleteUserById(@PathVariable("userId") Integer userId){
-        if (!userService.existUserById(userId)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Optional<User> deletedUser = userService.deleteUserById(userId);
-        return new ResponseEntity<>(deletedUser,HttpStatus.OK);
+
+
+    @GetMapping("/delete")
+    public String deleteUserForm(){
+        return "userView/deleteuserform";
+    }
+
+    @PostMapping("/delete")
+    public String deleteUserById(@RequestParam("id")Integer userId){
+       userService.deleteUserById(userId);
+       return "home";
     }
 
 
